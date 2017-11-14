@@ -107,9 +107,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Django_Learn',
-        'USER': 'eric',
-        'PASSWORD': 'cgyzdswdmx',
-        'HOST': 'ericsoutheastasia.cloudapp.net',
+        'USER': 'xxxxxx',
+        'PASSWORD': 'xxxxxx',
+        'HOST': 'xxxxxxxx',
         'PORT': '3306'
     }
 }
@@ -158,7 +158,7 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = '1483687801@qq.com'
-EMAIL_HOST_PASSWORD = 'fhnrulflxtupjahb'
+EMAIL_HOST_USER = 'xxxxxxx'
+EMAIL_HOST_PASSWORD = 'xxxxxx'
 EMAIL_USE_TLS = True
-EMAIL_FROM = '1483687801@qq.com'
+EMAIL_FROM = 'xxxxxxx'
