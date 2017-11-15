@@ -92,7 +92,37 @@ class ForgetPwdView(View):
     def post(self, request):
         forget_pwd_form = ForgetPwdForm(request.POST)
         if forget_pwd_form.is_valid():
+            email = request.POST.get('email', '')
+            if UserProfile.objects.filter(email=email).exists():
+                send_email(email, code_type='forget')
+                # return render(request, 'password_reset.html', {'email': email})
+            else:
+                return render(request, 'forgetpwd.html', {'msg': 'email不存在'})
+
+
+class ResetView(View):
+    def get(self, request):
+        code_type = request.GET.get('type')
+        code_value = request.GET.get('code')
+        active_record = EmailVerifyRecord.objects.get(code=code_value, sendType=code_type)
+        if active_record is not None:
+            user = UserProfile.objects.get(email=active_record.email)
+            return render(request, 'password_reset.html', {'email': user.email})
+        else:
+            pass
+            # 处理链接错误
+
+    def post(self, request):
+        pwd1 = request.POST.get('password')
+        pwd2 = request.POST.get('password2')
+        if pwd1 != pwd2:
+            return render(request, 'password_reset.html', {'msg': '密码不一致'})
+        else:
             email = request.POST.get('email')
+            user = UserProfile.objects.get(email=email)
+            user.password = make_password(pwd2)
+            user.save()
+            return render(request, 'login.html')
 
 
 

@@ -27,8 +27,7 @@ def send_email(email, code_type='register'):
     email_record.sendType = code_type
     email_record.save()
 
-    email_title = ''
-    email_body = ''
+    send_status = None
 
     if code_type == 'register':
         email_title = '激活链接'
@@ -36,5 +35,11 @@ def send_email(email, code_type='register'):
                         Site.objects.get_current().domain, code_type, code)
 
         send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
-        if send_status:
-            print('sucess')
+    elif code_type == 'forget':
+        email_title = '重置密码链接'
+        email_body = '请点击以下激活链接:http://{}/pwdReset/?type={}&code={}'.format(
+            Site.objects.get_current().domain, code_type, code)
+
+        send_status = send_mail(email_title, email_body, EMAIL_FROM, [email])
+
+    return send_status

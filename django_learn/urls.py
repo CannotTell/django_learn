@@ -17,7 +17,10 @@ from django.conf.urls import url, include
 from django.contrib import admin
 import xadmin
 from django.views.generic import TemplateView
-from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView
+from organization.views import OrgList
+from django.views.static import serve
+from django_learn.settings import MEDIA_ROOT
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
@@ -28,4 +31,8 @@ urlpatterns = [
     url(r'^captcha/', include('captcha.urls')),
     url(r'^verifyCode/$', ActiveUserView.as_view(), name='verifyCode'),
     url(r'^forgetpwd/$', ForgetPwdView.as_view(), name='forgetpwd'),
+    url(r'^pwdReset/$', ResetView.as_view(), name='pwdReset'),
+    url(r'^org-list/$', OrgList.as_view(), name='org_list'),
+
+    url(r'media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT})
 ]
